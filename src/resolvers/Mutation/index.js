@@ -1,19 +1,17 @@
-import addOrderFulfillmentGroup from "./addOrderFulfillmentGroup.js";
-import cancelOrderItem from "./cancelOrderItem.js";
-import createRefund from "./createRefund.js";
-import moveOrderItems from "./moveOrderItems.js";
-import placeOrder from "./placeOrder.js";
-import splitOrderItem from "./splitOrderItem.js";
-import updateOrder from "./updateOrder.js";
-import updateOrderFulfillmentGroup from "./updateOrderFulfillmentGroup.js";
+import addQuotationFulfillmentGroup from "./addQuotationFulfillmentGroup.js";
+import cancelQuotationItem from "./cancelQuotationItem.js";
+import moveQuotationItems from "./moveQuotationItems.js";
+import placeQuotation from "./placeQuotation.js";
+import splitQuotationItem from "./splitQuotationItem.js";
+import updateQuotation from "./updateQuotation.js";
+import updateQuotationFulfillmentGroup from "./updateQuotationFulfillmentGroup.js";
 
 export default {
-  addOrderFulfillmentGroup,
-  cancelOrderItem,
-  createRefund,
-  moveOrderItems,
-  placeOrder,
-  splitOrderItem,
-  updateOrder,
-  updateOrderFulfillmentGroup
+  addQuotationFulfillmentGroup,
+  cancelQuotationItem,
+  moveQuotationItems,
+  placeQuotation,
+  splitQuotationItem,
+  updateQuotation,
+  updateQuotationFulfillmentGroup
 };

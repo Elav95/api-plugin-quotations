@@ -1,4 +1,4 @@
-import { extendOrdersSchemas } from "./simpleSchemas.js";
+import { extendQuotationsSchemas } from "./simpleSchemas.js";
 
 /**
  * @summary Called before startup
@@ -6,6 +6,6 @@ import { extendOrdersSchemas } from "./simpleSchemas.js";
  * @param {Object} context.simpleSchemas Map of SimpleSchemas
  * @returns {undefined}
  */
-export default function ordersPreStartup(context) {
-  extendOrdersSchemas(context.simpleSchemas);
+export default function quotationsPreStartup(context) {
+  extendQuotationsSchemas(context.simpleSchemas);
 }

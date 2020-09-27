@@ -49,7 +49,7 @@ const Metafield = new SimpleSchema({
 });
 
 /**
- * @name OrderAddress
+ * @name QuotationAddress
  * @memberof Schemas
  * @type {SimpleSchema}
  * @property {String} _id
@@ -70,7 +70,7 @@ const Metafield = new SimpleSchema({
  * @property {Boolean} failedValidation
  * @property {Metafield[]} metafields
  */
-export const OrderAddress = new SimpleSchema({
+export const QuotationAddress = new SimpleSchema({
   "_id": {
     type: String,
     optional: true
@@ -207,13 +207,13 @@ const Money = new SimpleSchema({
 });
 
 /**
- * @name CommonOrderItemAttribute
+ * @name CommonQuotationItemAttribute
  * @memberof Schemas
  * @type {SimpleSchema}
  * @property {String} label required
  * @property {String} value optional
  */
-export const CommonOrderItemAttribute = new SimpleSchema({
+export const CommonQuotationItemAttribute = new SimpleSchema({
   label: String,
   value: {
     type: String,
@@ -221,13 +221,13 @@ export const CommonOrderItemAttribute = new SimpleSchema({
   }
 });
 
-export const CommonOrderItem = new SimpleSchema({
+export const CommonQuotationItem = new SimpleSchema({
   "_id": String,
   "attributes": {
     type: Array,
     optional: true
   },
-  "attributes.$": CommonOrderItemAttribute,
+  "attributes.$": CommonQuotationItemAttribute,
   "isTaxable": {
     type: Boolean,
     optional: true
@@ -260,7 +260,7 @@ export const CommonOrderItem = new SimpleSchema({
   }
 });
 
-const CommonOrderFulfillmentPrices = new SimpleSchema({
+const CommonQuotationFulfillmentPrices = new SimpleSchema({
   handling: {
     type: Money,
     optional: true
@@ -275,7 +275,7 @@ const CommonOrderFulfillmentPrices = new SimpleSchema({
   }
 });
 
-const CommonOrderTotals = new SimpleSchema({
+const CommonQuotationTotals = new SimpleSchema({
   groupDiscountTotal: {
     type: Money,
     optional: true
@@ -288,15 +288,15 @@ const CommonOrderTotals = new SimpleSchema({
     type: Money,
     optional: true
   },
-  orderDiscountTotal: {
+  quotationDiscountTotal: {
     type: Money,
     optional: true
   },
-  orderItemTotal: {
+  quotationItemTotal: {
     type: Money,
     optional: true
   },
-  orderTotal: {
+  quotationTotal: {
     type: Money,
     optional: true
   }
@@ -304,21 +304,21 @@ const CommonOrderTotals = new SimpleSchema({
 
 /**
  * @type {SimpleSchema}
- * @summary The CommonOrder schema describes an order for a single shop, containing only
+ * @summary The CommonQuotation schema describes an quotation for a single shop, containing only
  *   properties that can be provided by a Cart as well. Each fulfillment group in a Cart
- *   or Order can be transformed into a single CommonOrder. This allows plugins that
- *   operate on both cart and order to provide only a single function, accepting a CommonOrder,
- *   where the caller can transform and store the result as necessary for either Cart or Order.
- *   For example, tax services accept a CommonOrder and calculate taxes without knowing or
- *   caring whether it is for a Cart or an Order.
+ *   or Quotation can be transformed into a single CommonQuotation. This allows plugins that
+ *   operate on both cart and quotation to provide only a single function, accepting a CommonQuotation,
+ *   where the caller can transform and store the result as necessary for either Cart or Quotation.
+ *   For example, tax services accept a CommonQuotation and calculate taxes without knowing or
+ *   caring whether it is for a Cart or an Quotation.
  */
-export const CommonOrder = new SimpleSchema({
+export const CommonQuotation = new SimpleSchema({
   accountId: {
     type: String,
     optional: true
   },
   billingAddress: {
-    type: OrderAddress,
+    type: QuotationAddress,
     optional: true
   },
   cartId: {
@@ -330,36 +330,36 @@ export const CommonOrder = new SimpleSchema({
     type: String,
     optional: true
   },
-  fulfillmentPrices: CommonOrderFulfillmentPrices,
+  fulfillmentPrices: CommonQuotationFulfillmentPrices,
   fulfillmentType: {
     type: String,
     allowedValues: ["shipping"]
   },
-  items: [CommonOrderItem],
-  orderId: {
+  items: [CommonQuotationItem],
+  quotationId: {
     type: String,
     optional: true
   },
   originAddress: {
-    type: OrderAddress,
+    type: QuotationAddress,
     optional: true
   },
   shippingAddress: {
-    type: OrderAddress,
+    type: QuotationAddress,
     optional: true
   },
   shopId: String,
   sourceType: {
     type: String,
-    allowedValues: ["cart", "order"]
+    allowedValues: ["cart", "quotation"]
   },
   totals: {
-    type: CommonOrderTotals,
+    type: CommonQuotationTotals,
     optional: true
   }
 });
 
-export const orderItemInputSchema = new SimpleSchema({
+export const quotationItemInputSchema = new SimpleSchema({
   "addedAt": {
     type: Date,
     optional: true
@@ -374,7 +374,7 @@ export const orderItemInputSchema = new SimpleSchema({
   }
 });
 
-export const orderFulfillmentGroupInputSchema = new SimpleSchema({
+export const quotationFulfillmentGroupInputSchema = new SimpleSchema({
   "data": {
     type: Object,
     blackbox: true,
@@ -384,7 +384,7 @@ export const orderFulfillmentGroupInputSchema = new SimpleSchema({
     type: Array,
     minCount: 1
   },
-  "items.$": orderItemInputSchema,
+  "items.$": quotationItemInputSchema,
   "selectedFulfillmentMethodId": String,
   "shopId": String,
   "totalPrice": {
@@ -398,12 +398,12 @@ export const orderFulfillmentGroupInputSchema = new SimpleSchema({
 });
 
 // Exported for unit tests
-export const orderInputSchema = new SimpleSchema({
+export const quotationInputSchema = new SimpleSchema({
   // Although billing address is typically needed only by the payment plugin,
   // some tax services require it to calculate taxes for digital items. Thus
-  // it should be provided here in order to be added to the CommonOrder if possible.
+  // it should be provided here in quotation to be added to the CommonQuotation if possible.
   "billingAddress": {
-    type: OrderAddress,
+    type: QuotationAddress,
     optional: true
   },
   "cartId": {
@@ -413,9 +413,9 @@ export const orderInputSchema = new SimpleSchema({
   "currencyCode": String,
   /**
    * If you need to store customFields, be sure to add them to your
-   * GraphQL input schema and your Order SimpleSchema with proper typing.
+   * GraphQL input schema and your Quotation SimpleSchema with proper typing.
    * This schema need not care what `customFields` is because the input
-   * and Order schemas will validate. Thus, we use blackbox here.
+   * and Quotation schemas will validate. Thus, we use blackbox here.
    */
   "customFields": {
     type: Object,
@@ -427,8 +427,8 @@ export const orderInputSchema = new SimpleSchema({
     type: Array,
     minCount: 1
   },
-  "fulfillmentGroups.$": orderFulfillmentGroupInputSchema,
-  "ordererPreferredLanguage": {
+  "fulfillmentGroups.$": quotationFulfillmentGroupInputSchema,
+  "quotationerPreferredLanguage": {
     type: String,
     optional: true
   },
@@ -437,9 +437,9 @@ export const orderInputSchema = new SimpleSchema({
 
 export const paymentInputSchema = new SimpleSchema({
   amount: Number,
-  // Optionally override the order.billingAddress for each payment
+  // Optionally override the quotation.billingAddress for each payment
   billingAddress: {
-    type: OrderAddress,
+    type: QuotationAddress,
     optional: true
   },
   data: {
@@ -486,7 +486,7 @@ const Document = new SimpleSchema({
  * @property {String} status (required) Whether the export attempt succeeded or failed
  * @property {Date} dateAttempted (required) Date the export was attempted
  * @property {String} exportMethod (required) Name of the export method (e.g. CSV, Shopify)
- * @property {String} destinationIdentifier The identifier for this order on the remote system
+ * @property {String} destinationIdentifier The identifier for this quotation on the remote system
  * @property {String} shopId (required) The shop ID
  */
 const ExportHistory = new SimpleSchema({
@@ -534,7 +534,7 @@ const History = new SimpleSchema({
 });
 
 /**
- * @name OrderInvoice
+ * @name QuotationInvoice
  * @type {SimpleSchema}
  * @memberof Schemas
  * @property {Number} discounts Total of all discounts (a positive number, but subtracted from the grand total)
@@ -546,7 +546,7 @@ const History = new SimpleSchema({
  * @property {Number} taxes Total tax
  * @property {Number} total Grand total
  */
-export const OrderInvoice = new SimpleSchema({
+export const QuotationInvoice = new SimpleSchema({
   currencyCode: String,
   discounts: {
     type: Number,
@@ -624,25 +624,25 @@ const Workflow = new SimpleSchema({
 });
 
 /**
- * @name OrderDiscount
+ * @name QuotationDiscount
  * @memberof Schemas
  * @type {SimpleSchema}
- * @property {Number} amount Amount of discount applied to the order
+ * @property {Number} amount Amount of discount applied to the quotation
  * @property {String} discountId Discount ID
  */
-const OrderDiscount = new SimpleSchema({
+const QuotationDiscount = new SimpleSchema({
   amount: Number,
   discountId: String
 });
 
 /**
- * @name OrderItemAttribute
+ * @name QuotationItemAttribute
  * @memberof Schemas
  * @type {SimpleSchema}
  * @property {String} label required
  * @property {String} value optional
  */
-const OrderItemAttribute = new SimpleSchema({
+const QuotationItemAttribute = new SimpleSchema({
   label: String,
   value: {
     type: String,
@@ -651,20 +651,20 @@ const OrderItemAttribute = new SimpleSchema({
 });
 
 /**
- * @name OrderItem
+ * @name QuotationItem
  * @memberof Schemas
- * @summary Defines one item in an order
+ * @summary Defines one item in an quotation
  * @type {SimpleSchema}
  * @property {String} _id Unique ID for the item
- * @property {String} addedAt Date/time when this was first added to the cart/order
- * @property {OrderItemAttribute[]} attributes Attributes of this item
+ * @property {String} addedAt Date/time when this was first added to the cart/quotation
+ * @property {QuotationItemAttribute[]} attributes Attributes of this item
  * @property {String} cancelReason Free text reason for cancel, if this item is canceled
- * @property {String} createdAt Date/time when this order item was created
+ * @property {String} createdAt Date/time when this quotation item was created
  * @property {Document[]} documents optional
  * @property {History[]} history optional
  * @property {String} optionTitle optionTitle from the selected variant
  * @property {ShippingParcel} parcel Currently, parcel is in simple product schema. Need to include it here as well.
- * @property {Money} price The price+currency of variantId at the moment the related order was placed
+ * @property {Money} price The price+currency of variantId at the moment the related quotation was placed
  * @property {String} productId required
  * @property {String} productSlug Product slug
  * @property {String} productType Product type
@@ -679,14 +679,14 @@ const OrderItemAttribute = new SimpleSchema({
  * @property {Workflow} workflow optional
  *
  */
-export const OrderItem = new SimpleSchema({
+export const QuotationItem = new SimpleSchema({
   "_id": String,
   "addedAt": Date,
   "attributes": {
     type: Array,
     optional: true
   },
-  "attributes.$": OrderItemAttribute,
+  "attributes.$": QuotationItemAttribute,
   "cancelReason": {
     type: String,
     optional: true
@@ -797,15 +797,15 @@ const SelectedFulfillmentOption = new SimpleSchema({
 });
 
 /**
- * @name OrderFulfillmentGroup Schema
+ * @name QuotationFulfillmentGroup Schema
  * @memberof Schemas
- * @summary One fulfillment group of an order
+ * @summary One fulfillment group of an quotation
  * @type {SimpleSchema}
  * @property {String} _id Group ID
  * @property {Object} address Shipping address
  * @property {String} customsLabelUrl URL for customs label
  * @property {Object} invoice Invoice (same as the one on Payment)
- * @property {Object[]} items The order items in this group
+ * @property {Object[]} items The quotation items in this group
  * @property {String[]} itemIds For convenience, the _id of all the items
  * @property {Object} payment The payment info for this group
  * @property {Object} shipmentMethod The fulfillment method that was chosen by the customer
@@ -817,22 +817,22 @@ const SelectedFulfillmentOption = new SimpleSchema({
  * @property {String} type Fulfillment type
  * @property {Object} workflow Current status and past statuses for this fulfillment
  */
-export const OrderFulfillmentGroup = new SimpleSchema({
+export const QuotationFulfillmentGroup = new SimpleSchema({
   "_id": String,
   "address": {
-    type: OrderAddress,
+    type: QuotationAddress,
     optional: true
   },
   "customsLabelUrl": {
     type: String,
     optional: true
   },
-  "invoice": OrderInvoice,
+  "invoice": QuotationInvoice,
   "items": {
     type: Array,
     minCount: 1
   },
-  "items.$": OrderItem,
+  "items.$": QuotationItem,
   "itemIds": [String],
   "shipmentMethod": SelectedFulfillmentOption,
   "shippingLabelUrl": {
@@ -864,9 +864,9 @@ export const OrderFulfillmentGroup = new SimpleSchema({
 });
 
 /**
- * @name OrderTransaction Schema
+ * @name QuotationTransaction Schema
  * @memberof Schemas
- * @summary Order transactions tie Shipping, Payment, and Inventory transactions
+ * @summary Quotation transactions tie Shipping, Payment, and Inventory transactions
  * @type {SimpleSchema}
  * @property {String} itemId optional
  * @property {String} paymentId optional
@@ -874,7 +874,7 @@ export const OrderFulfillmentGroup = new SimpleSchema({
  * @property {String} inventoryId optional
  * @property {Date} createdAt required
  */
-const OrderTransaction = new SimpleSchema({
+const QuotationTransaction = new SimpleSchema({
   itemId: {
     type: String,
     optional: true
@@ -927,7 +927,7 @@ const CurrencyExchangeRate = new SimpleSchema({
  * @property {CurrencyExchangeRate} [currency] The exchange rate, if the user's currency is different from shop's
  * @property {Object} [data] Arbitrary data that the payment method needs
  * @property {String} mode "authorize" if still needs to be captured, or "capture" if captured. "cancel" if auth was canceled.
- * @property {Invoice} invoice A summary of the totals that make up the full charge amount. Created when the payment is added to an order.
+ * @property {Invoice} invoice A summary of the totals that make up the full charge amount. Created when the payment is added to an quotation.
  * @property {String} shopId The ID of the shop that is being paid.
  */
 export const Payment = new SimpleSchema({
@@ -936,7 +936,7 @@ export const Payment = new SimpleSchema({
     label: "Payment Id"
   },
   "address": {
-    type: OrderAddress,
+    type: QuotationAddress,
     optional: true
   },
   "amount": Number,
@@ -986,17 +986,17 @@ export const Payment = new SimpleSchema({
 });
 
 /**
- * @name Order Schema
+ * @name Quotation Schema
  * @memberof Schemas
  * @type {SimpleSchema}
- * @summary Order has an array of History, Documents, Notes, Items and OrderTransactions.
+ * @summary Quotation has an array of History, Documents, Notes, Items and QuotationTransactions.
  * @property {String} _id required
- * @property {String} accountId Account ID for account orders, or null for anonymous
- * @property {Object[]} anonymousAccessTokens Tokens for accessing anonymous orders, null for account orders
+ * @property {String} accountId Account ID for account quotations, or null for anonymous
+ * @property {Object[]} anonymousAccessTokens Tokens for accessing anonymous quotations, null for account quotations
  * @property {String} anonymousAccessTokens.hashedToken The hashed value for DB queries
  * @property {Date} anonymousAccessTokens.createdAt When the token was created. Expiry is not currently implemented, but this Date is here to support that.
  * @property {Address} [billingAddress] Optional billing address
- * @property {String} cartId optional For tracking which cart created this order
+ * @property {String} cartId optional For tracking which cart created this quotation
  * @property {Date} createdAt required
  * @property {String} currencyCode required
  * @property {Object} customFields optional
@@ -1008,12 +1008,12 @@ export const Payment = new SimpleSchema({
  * @property {Payment[]} payments Array of payments
  * @property {Shipment[]} shipping Array of fulfillment groups
  * @property {String} shopId required The owner shop
- * @property {Surcharges[]} surcharges Surcharges applied to this order
- * @property {OrderTransaction[]} transactions optional
+ * @property {Surcharges[]} surcharges Surcharges applied to this quotation
+ * @property {QuotationTransaction[]} transactions optional
  * @property {Date} updatedAt optional
  * @property {Workflow} workflow optional
  */
-export const Order = new SimpleSchema({
+export const Quotation = new SimpleSchema({
   "_id": {
     type: String,
     optional: true
@@ -1029,9 +1029,9 @@ export const Order = new SimpleSchema({
   "anonymousAccessTokens.$": AnonymousAccessToken,
   // Although billing address is typically needed only by the payment plugin,
   // some tax services require it to calculate taxes for digital items. Thus
-  // it should be provided here in order to be added to the CommonOrder if possible.
+  // it should be provided here in quotation to be added to the CommonQuotation if possible.
   "billingAddress": {
-    type: OrderAddress,
+    type: QuotationAddress,
     optional: true
   },
   "cartId": {
@@ -1049,7 +1049,7 @@ export const Order = new SimpleSchema({
     type: Array,
     optional: true
   },
-  "discounts.$": OrderDiscount,
+  "discounts.$": QuotationDiscount,
   "documents": {
     type: Array,
     optional: true
@@ -1075,7 +1075,7 @@ export const Order = new SimpleSchema({
     optional: true
   },
   "notes.$": Notes,
-  "ordererPreferredLanguage": {
+  "quotationerPreferredLanguage": {
     type: String,
     optional: true
   },
@@ -1087,7 +1087,7 @@ export const Order = new SimpleSchema({
   "referenceId": {
     type: String
   },
-  "shipping": [OrderFulfillmentGroup],
+  "shipping": [QuotationFulfillmentGroup],
   "shopId": String,
   "surcharges": {
     type: Array,
@@ -1105,7 +1105,7 @@ export const Order = new SimpleSchema({
     type: Array,
     optional: true
   },
-  "transactions.$": OrderTransaction,
+  "transactions.$": QuotationTransaction,
   "updatedAt": {
     type: Date,
     optional: true
@@ -1122,9 +1122,9 @@ export const Order = new SimpleSchema({
  * @param {Object} schemas Schema map from context
  * @return {undefined}
  */
-export function extendOrdersSchemas(schemas) {
+export function extendQuotationsSchemas(schemas) {
   schemas.Shop.extend({
-    orderStatusLabels: {
+    quotationStatusLabels: {
       type: Object,
       blackbox: true,
       optional: true

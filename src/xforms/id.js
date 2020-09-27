@@ -5,9 +5,9 @@ const namespaces = {
   Account: "reaction/account",
   Cart: "reaction/cart",
   FulfillmentMethod: "reaction/fulfillmentMethod",
-  Order: "reaction/order",
-  OrderFulfillmentGroup: "reaction/orderFulfillmentGroup",
-  OrderItem: "reaction/orderItem",
+  Quotation: "reaction/quotation",
+  QuotationFulfillmentGroup: "reaction/quotationFulfillmentGroup",
+  QuotationItem: "reaction/quotationItem",
   Payment: "reaction/payment",
   Product: "reaction/product",
   Refund: "reaction/refund",
@@ -16,9 +16,9 @@ const namespaces = {
 
 export const encodeAccountOpaqueId = encodeOpaqueId(namespaces.Account);
 export const encodeCartOpaqueId = encodeOpaqueId(namespaces.Cart);
-export const encodeOrderFulfillmentGroupOpaqueId = encodeOpaqueId(namespaces.OrderFulfillmentGroup);
-export const encodeOrderItemOpaqueId = encodeOpaqueId(namespaces.OrderItem);
-export const encodeOrderOpaqueId = encodeOpaqueId(namespaces.Order);
+export const encodeQuotationFulfillmentGroupOpaqueId = encodeOpaqueId(namespaces.QuotationFulfillmentGroup);
+export const encodeQuotationItemOpaqueId = encodeOpaqueId(namespaces.QuotationItem);
+export const encodeQuotationOpaqueId = encodeOpaqueId(namespaces.Quotation);
 export const encodePaymentOpaqueId = encodeOpaqueId(namespaces.Payment);
 export const encodeProductOpaqueId = encodeOpaqueId(namespaces.Product);
 export const encodeRefundOpaqueId = encodeOpaqueId(namespaces.Refund);
@@ -27,19 +27,19 @@ export const encodeShopOpaqueId = encodeOpaqueId(namespaces.Shop);
 export const decodeAccountOpaqueId = decodeOpaqueIdForNamespace(namespaces.Account);
 export const decodeCartOpaqueId = decodeOpaqueIdForNamespace(namespaces.Cart);
 export const decodeFulfillmentMethodOpaqueId = decodeOpaqueIdForNamespace(namespaces.FulfillmentMethod);
-export const decodeOrderFulfillmentGroupOpaqueId = decodeOpaqueIdForNamespace(namespaces.OrderFulfillmentGroup);
-export const decodeOrderItemOpaqueId = decodeOpaqueIdForNamespace(namespaces.OrderItem);
-export const decodeOrderOpaqueId = decodeOpaqueIdForNamespace(namespaces.Order);
+export const decodeQuotationFulfillmentGroupOpaqueId = decodeOpaqueIdForNamespace(namespaces.QuotationFulfillmentGroup);
+export const decodeQuotationItemOpaqueId = decodeOpaqueIdForNamespace(namespaces.QuotationItem);
+export const decodeQuotationOpaqueId = decodeOpaqueIdForNamespace(namespaces.Quotation);
 export const decodePaymentOpaqueId = decodeOpaqueIdForNamespace(namespaces.Payment);
 export const decodeProductOpaqueId = decodeOpaqueIdForNamespace(namespaces.Product);
 export const decodeRefundOpaqueId = decodeOpaqueIdForNamespace(namespaces.Refund);
 export const decodeShopOpaqueId = decodeOpaqueIdForNamespace(namespaces.Shop);
 
 /**
- * @param {Object[]} items Array of OrderItemInput
+ * @param {Object[]} items Array of QuotationItemInput
  * @returns {Object[]} Same array with all IDs transformed to internal
  */
-export function decodeOrderItemsOpaqueIds(items) {
+export function decodeQuotationItemsOpaqueIds(items) {
   return items.map((item) => ({
     ...item,
     productConfiguration: {

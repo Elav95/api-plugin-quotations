@@ -1,22 +1,22 @@
 extend type Query {
-  "Get an order by its ID"
-  orderById(
-    "The order ID"
+  "Get an quotation by its ID"
+  quotationById(
+    "The quotation ID"
     id: ID!,
 
-    "The shop that owns the order"
+    "The shop that owns the quotation"
     shopId: ID!,
 
-    "A valid anonymous access token for this order. Required if the order is not linked with an account."
+    "A valid anonymous access token for this quotation. Required if the quotation is not linked with an account."
     token: String
-  ): Order
+  ): Quotation
 
-  "Get all orders for a single account, optionally limited to certain shop IDs and certain orderStatus"
-  orders(
-    "Filters to apply to a list of orders"
-    filters: OrderFilterInput
+  "Get all quotations for a single account, optionally limited to certain shop IDs and certain quotationStatus"
+  quotations(
+    "Filters to apply to a list of quotations"
+    filters: QuotationFilterInput
 
-    "Provide a list of shop IDs from which you want to get orders from"
+    "Provide a list of shop IDs from which you want to get quotations from"
     shopIds: [ID],
 
     "Return only results that come after this cursor. Use this with `first` to specify the number of results to return."
@@ -34,22 +34,22 @@ extend type Query {
     "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
     offset: Int,
 
-    "Return results sorted in this order"
-    sortOrder: SortOrder = desc,
+    "Return results sorted in this quotation"
+    sortQuotation: SortQuotation = desc,
 
-    "By default, orders are sorted by when they were created, newest first. Set this to sort by one of the other allowed fields"
-    sortBy: OrdersSortByField = createdAt
-  ): OrderConnection!
+    "By default, quotations are sorted by when they were created, newest first. Set this to sort by one of the other allowed fields"
+    sortBy: QuotationsSortByField = createdAt
+  ): QuotationConnection!
 
-  "Get all orders for a single account, optionally limited to certain shop IDs and certain orderStatus"
-  ordersByAccountId(
-    "Limit to orders placed by this account"
+  "Get all quotations for a single account, optionally limited to certain shop IDs and certain quotationStatus"
+  quotationsByAccountId(
+    "Limit to quotations placed by this account"
     accountId: ID!,
 
-    "Limit to orders with one of these statuses"
-    orderStatus: [String],
+    "Limit to quotations with one of these statuses"
+    quotationStatus: [String],
 
-    "Limit to orders owned by one of these shops"
+    "Limit to quotations owned by one of these shops"
     shopIds: [ID]!,
 
     "Return only results that come after this cursor. Use this with `first` to specify the number of results to return."
@@ -67,172 +67,172 @@ extend type Query {
     "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
     offset: Int,
 
-    "Return results sorted in this order"
-    sortOrder: SortOrder = desc,
+    "Return results sorted in this quotation"
+    sortQuotation: SortQuotation = desc,
 
-    "By default, orders are sorted by when they were created, newest first. Set this to sort by one of the other allowed fields"
-    sortBy: OrdersByAccountIdSortByField = createdAt
-  ): OrdersByAccountIdConnection!
+    "By default, quotations are sorted by when they were created, newest first. Set this to sort by one of the other allowed fields"
+    sortBy: QuotationsByAccountIdSortByField = createdAt
+  ): QuotationsByAccountIdConnection!
 
-  "Get an order by its reference ID (the ID shown to customers)"
-  orderByReferenceId(
-    "The order reference ID (the ID shown to customers)"
+  "Get an quotation by its reference ID (the ID shown to customers)"
+  quotationByReferenceId(
+    "The quotation reference ID (the ID shown to customers)"
     id: ID!,
 
-    "The shop that owns the order"
+    "The shop that owns the quotation"
     shopId: ID!,
 
-    "A valid anonymous access token for this order. Required if the order is not linked with an account."
+    "A valid anonymous access token for this quotation. Required if the quotation is not linked with an account."
     token: String
-  ): Order
+  ): Quotation
 
-  "Get refunds applied to an order by order ID"
+  "Get refunds applied to an quotation by quotation ID"
   refunds(
-    "The order ID"
-    orderId: ID!,
+    "The quotation ID"
+    quotationId: ID!,
 
-    "The shop that owns the order"
+    "The shop that owns the quotation"
     shopId: ID!,
 
-    "A valid anonymous access token for this order. Required if the order is not linked with an account."
+    "A valid anonymous access token for this quotation. Required if the quotation is not linked with an account."
     token: String
   ): [Refund]
 
   "Get refunds applied to a specific payment by payment ID"
   refundsByPaymentId(
-    "The order ID"
-    orderId: ID!,
+    "The quotation ID"
+    quotationId: ID!,
 
-    "The ID of one of the payments made for this order"
+    "The ID of one of the payments made for this quotation"
     paymentId: ID!,
 
-    "The shop that owns the order"
+    "The shop that owns the quotation"
     shopId: ID!,
 
-    "A valid anonymous access token for this order. Required if the order is not linked with an account."
+    "A valid anonymous access token for this quotation. Required if the quotation is not linked with an account."
     token: String
   ): [Refund]
 }
 
 extend type Mutation {
   """
-  Use this mutation to add a new order fulfillment group to an order. It must have at least one
+  Use this mutation to add a new quotation fulfillment group to an quotation. It must have at least one
   item. Items may be provided or moved from another existing group or both.
   """
-  addOrderFulfillmentGroup(
+  addQuotationFulfillmentGroup(
     "Mutation input"
-    input: AddOrderFulfillmentGroupInput!
-  ): AddOrderFulfillmentGroupPayload!
+    input: AddQuotationFulfillmentGroupInput!
+  ): AddQuotationFulfillmentGroupPayload!
 
   """
-  Use this mutation to cancel one item of an order, either for the full ordered quantity
+  Use this mutation to cancel one item of an quotation, either for the full quotationed quantity
   or for a partial quantity. If partial, the item will be split into two items and the
   original item will have a lower quantity and will be canceled.
 
   If this results in all items in a fulfillment group being canceled, the group will also
-  be canceled. If this results in all fulfillment groups being canceled, the full order will
+  be canceled. If this results in all fulfillment groups being canceled, the full quotation will
   also be canceled.
   """
-  cancelOrderItem(
+  cancelQuotationItem(
     "Mutation input"
-    input: CancelOrderItemInput!
-  ): CancelOrderItemPayload!
+    input: CancelQuotationItemInput!
+  ): CancelQuotationItemPayload!
 
-  "Use this mutation to create a refund on a payment method used to make the order"
+  "Use this mutation to create a refund on a payment method used to make the quotation"
   createRefund(
     "Mutation input"
     input: CreateRefundInput!
   ): CreateRefundPayload!
 
   """
-  Use this mutation to move one or more items between existing order fulfillment groups.
+  Use this mutation to move one or more items between existing quotation fulfillment groups.
   """
-  moveOrderItems(
+  moveQuotationItems(
     "Mutation input"
-    input: MoveOrderItemsInput!
-  ): MoveOrderItemsPayload!
+    input: MoveQuotationItemsInput!
+  ): MoveQuotationItemsPayload!
 
   """
-  Use this mutation to place an order, providing information necessary to pay for it.
-  The order will be placed only if authorization is successful for all submitted payments.
+  Use this mutation to place an quotation, providing information necessary to pay for it.
+  The quotation will be placed only if authorization is successful for all submitted payments.
   """
-  placeOrder(
+  placeQuotation(
     "Mutation input"
-    input: PlaceOrderInput!
-  ): PlaceOrderPayload!
+    input: PlaceQuotationInput!
+  ): PlaceQuotationPayload!
 
   """
-  Use this mutation to reduce the quantity of one item of an order and create
+  Use this mutation to reduce the quantity of one item of an quotation and create
   a new item for the remaining quantity in the same fulfillment group, and with the
   same item status. You may want to do this if you are only able to partially fulfill
-  the item order right now.
+  the item quotation right now.
   """
-  splitOrderItem(
+  splitQuotationItem(
     "Mutation input"
-    input: SplitOrderItemInput!
-  ): SplitOrderItemPayload!
+    input: SplitQuotationItemInput!
+  ): SplitQuotationItemPayload!
 
   """
-  Use this mutation to update order details after the order has been placed.
+  Use this mutation to update quotation details after the quotation has been placed.
   """
-  updateOrder(
+  updateQuotation(
     "Mutation input"
-    input: UpdateOrderInput!
-  ): UpdateOrderPayload!
+    input: UpdateQuotationInput!
+  ): UpdateQuotationPayload!
 
   """
-  Use this mutation to update an order fulfillment group status and tracking information.
+  Use this mutation to update an quotation fulfillment group status and tracking information.
   """
-  updateOrderFulfillmentGroup(
+  updateQuotationFulfillmentGroup(
     "Mutation input"
-    input: UpdateOrderFulfillmentGroupInput!
-  ): UpdateOrderFulfillmentGroupPayload!
+    input: UpdateQuotationFulfillmentGroupInput!
+  ): UpdateQuotationFulfillmentGroupPayload!
 }
 
-"Allowed values for the `OrderFulfillmentGroupItems` sortBy parameter"
-enum OrderFulfillmentGroupItemsSortByField {
+"Allowed values for the `QuotationFulfillmentGroupItems` sortBy parameter"
+enum QuotationFulfillmentGroupItemsSortByField {
   "Sort by the item ID"
   _id
 
-  "Sort by the date and time when the item was added to the order"
+  "Sort by the date and time when the item was added to the quotation"
   addedAt
 }
 
-"The fields by which you are allowed to sort any query that returns a `OrdersByAccountIdConnection`"
-enum OrdersByAccountIdSortByField {
-  "Sort by the order ID"
+"The fields by which you are allowed to sort any query that returns a `QuotationsByAccountIdConnection`"
+enum QuotationsByAccountIdSortByField {
+  "Sort by the quotation ID"
   _id
 
-  "Sort by the date and time when the order was placed"
+  "Sort by the date and time when the quotation was placed"
   createdAt
 }
 
-"The fields by which you are allowed to sort any query that returns a `OrderConnection`"
-enum OrdersSortByField {
-  "Sort by the order ID"
+"The fields by which you are allowed to sort any query that returns a `QuotationConnection`"
+enum QuotationsSortByField {
+  "Sort by the quotation ID"
   _id
 
-  "Sort by the date and time when the order was placed"
+  "Sort by the date and time when the quotation was placed"
   createdAt
 }
 
 """
-Wraps a list of `Order`s, providing pagination cursors and information.
+Wraps a list of `Quotation`s, providing pagination cursors and information.
 
 For information about what Relay-compatible connections are and how to use them, see the following articles:
 - [Relay Connection Documentation](https://facebook.github.io/relay/docs/en/graphql-server-specification.html#connections)
 - [Relay Connection Specification](https://facebook.github.io/relay/graphql/connections.htm)
 - [Using Relay-style Connections With Apollo Client](https://www.apollographql.com/docs/react/recipes/pagination.html)
 """
-type OrderConnection {
+type QuotationConnection {
   "The list of nodes that match the query, wrapped in an edge to provide a cursor string for each"
-  edges: [OrderEdge]
+  edges: [QuotationEdge]
 
   """
   You can request the `nodes` directly to avoid the extra wrapping that `NodeEdge` has,
   if you know you will not need to paginate the results.
   """
-  nodes: [Order]
+  nodes: [Quotation]
 
   "Information to help a client request the next or previous page"
   pageInfo: PageInfo!
@@ -243,22 +243,22 @@ type OrderConnection {
 
 
 """
-Wraps a list of `Order`s, providing pagination cursors and information.
+Wraps a list of `Quotation`s, providing pagination cursors and information.
 
 For information about what Relay-compatible connections are and how to use them, see the following articles:
 - [Relay Connection Documentation](https://facebook.github.io/relay/docs/en/graphql-server-specification.html#connections)
 - [Relay Connection Specification](https://facebook.github.io/relay/graphql/connections.htm)
 - [Using Relay-style Connections With Apollo Client](https://www.apollographql.com/docs/react/recipes/pagination.html)
 """
-type OrdersByAccountIdConnection {
+type QuotationsByAccountIdConnection {
   "The list of nodes that match the query, wrapped in an edge to provide a cursor string for each"
-  edges: [OrdersByAccountIdEdge]
+  edges: [QuotationsByAccountIdEdge]
 
   """
   You can request the `nodes` directly to avoid the extra wrapping that `NodeEdge` has,
   if you know you will not need to paginate the results.
   """
-  nodes: [Order]
+  nodes: [Quotation]
 
   "Information to help a client request the next or previous page"
   pageInfo: PageInfo!
@@ -267,41 +267,41 @@ type OrdersByAccountIdConnection {
   totalCount: Int!
 }
 
-"A connection edge in which each node is a `Order` object"
-type OrderEdge implements NodeEdge {
+"A connection edge in which each node is a `Quotation` object"
+type QuotationEdge implements NodeEdge {
   "The cursor that represents this node in the paginated results"
   cursor: ConnectionCursor!
 
-  "The order"
-  node: Order
+  "The quotation"
+  node: Quotation
 }
 
-"A connection edge in which each node is a `Order` object"
-type OrdersByAccountIdEdge implements NodeEdge {
+"A connection edge in which each node is a `Quotation` object"
+type QuotationsByAccountIdEdge implements NodeEdge {
   "The cursor that represents this node in the paginated results"
   cursor: ConnectionCursor!
 
-  "The order"
-  node: Order
+  "The quotation"
+  node: Quotation
 }
 
 """
-Wraps a list of `OrderItem`s, providing pagination cursors and information.
+Wraps a list of `QuotationItem`s, providing pagination cursors and information.
 
 For information about what Relay-compatible connections are and how to use them, see the following articles:
 - [Relay Connection Documentation](https://facebook.github.io/relay/docs/en/graphql-server-specification.html#connections)
 - [Relay Connection Specification](https://facebook.github.io/relay/graphql/connections.htm)
 - [Using Relay-style Connections With Apollo Client](https://www.apollographql.com/docs/react/recipes/pagination.html)
 """
-type OrderItemConnection {
+type QuotationItemConnection {
   "The list of nodes that match the query, wrapped in an edge to provide a cursor string for each"
-  edges: [OrderItemEdge]
+  edges: [QuotationItemEdge]
 
   """
   You can request the `nodes` directly to avoid the extra wrapping that `NodeEdge` has,
   if you know you will not need to paginate the results.
   """
-  nodes: [OrderItem]
+  nodes: [QuotationItem]
 
   "Information to help a client request the next or previous page"
   pageInfo: PageInfo!
@@ -310,17 +310,17 @@ type OrderItemConnection {
   totalCount: Int!
 }
 
-"A connection edge in which each node is a `OrderItem` object"
-type OrderItemEdge implements NodeEdge {
+"A connection edge in which each node is a `QuotationItem` object"
+type QuotationItemEdge implements NodeEdge {
   "The cursor that represents this node in the paginated results"
   cursor: ConnectionCursor!
 
-  "The order item"
-  node: OrderItem
+  "The quotation item"
+  node: QuotationItem
 }
 
-"One attribute of an order item"
-type OrderItemAttribute {
+"One attribute of an quotation item"
+type QuotationItemAttribute {
   "The attribute label, e.g., Color"
   label: String
 
@@ -328,8 +328,8 @@ type OrderItemAttribute {
   value: String
 }
 
-"A summary of the totals for this order"
-type OrderSummary {
+"A summary of the totals for this quotation"
+type QuotationSummary {
   "The total of all discounts applied, as a positive number"
   discountTotal: Money!
 
@@ -353,10 +353,10 @@ type OrderSummary {
 }
 
 """
-A single item in an order. The item contains information about a purchase.
+A single item in an quotation. The item contains information about a purchase.
 """
-type OrderItem implements Node {
-  "The order item ID"
+type QuotationItem implements Node {
+  "The quotation item ID"
   _id: ID!
 
   """"
@@ -371,12 +371,12 @@ type OrderItem implements Node {
   FUTURE. Additional attributes of the chosen item. For example, if this item is for a product, socks, where `blue` and `small`
   options were chosen for some configurable attributes, then `color:blue` and `size:small` will be indicated here.
   """
-  attributes: [OrderItemAttribute]
+  attributes: [QuotationItemAttribute]
 
-  "If this order item is canceled, the reason for cancelation, if provided"
+  "If this quotation item is canceled, the reason for cancelation, if provided"
   cancelReason: String
 
-  "The date and time at which the order item was created"
+  "The date and time at which the quotation item was created"
   createdAt: DateTime!
 
   "The URLs for a picture of the item in various sizes"
@@ -417,8 +417,8 @@ type OrderItem implements Node {
     "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
     offset: Int,
 
-    "Return results sorted in this order"
-    sortOrder: SortOrder = asc,
+    "Return results sorted in this quotation"
+    sortQuotation: SortQuotation = asc,
 
     "By default, tags are sorted by ID. Set this to sort by one of the other allowed fields"
     sortBy: TagSortByField = _id
@@ -436,13 +436,13 @@ type OrderItem implements Node {
   "The shop associated with this cart item."
   shop: Shop!
 
-  "The machine-readable order item status."
+  "The machine-readable quotation item status."
   status: String!
 
-  "The price of the item multiplied by the quantity of this item ordered"
+  "The price of the item multiplied by the quantity of this item quotationed"
   subtotal: Money!
 
-  "A title for use in orders that conveys the selected product's title + chosen options"
+  "A title for use in quotations that conveys the selected product's title + chosen options"
   title: String!
 
   "The date and time at which this item was last updated"
@@ -453,29 +453,29 @@ type OrderItem implements Node {
 }
 
 """
-Extra data for an order fulfillment group with type `shipping`
+Extra data for an quotation fulfillment group with type `shipping`
 """
-type ShippingOrderFulfillmentGroupData {
+type ShippingQuotationFulfillmentGroupData {
   "The address to ship to"
   shippingAddress: Address!
 }
 
-"Extra data for an order fulfillment group"
-union OrderFulfillmentGroupData = ShippingOrderFulfillmentGroupData
+"Extra data for an quotation fulfillment group"
+union QuotationFulfillmentGroupData = ShippingQuotationFulfillmentGroupData
 
-"An order fulfillment group"
-type OrderFulfillmentGroup implements Node {
-  "The order fulfillment group ID"
+"An quotation fulfillment group"
+type QuotationFulfillmentGroup implements Node {
+  "The quotation fulfillment group ID"
   _id: ID!
 
-  "Information needed by the selected fulfillment method to properly fulfill the order"
-  data: OrderFulfillmentGroupData
+  "Information needed by the selected fulfillment method to properly fulfill the quotation"
+  data: QuotationFulfillmentGroupData
 
-  "The order status for display in UI"
+  "The quotation status for display in UI"
   displayStatus(
     """
     The language in which you want the status. If no translation is available for this language,
-    it will be in the default language of the shop that owns the order.
+    it will be in the default language of the shop that owns the quotation.
     """
     language: String!
   ): String!
@@ -497,12 +497,12 @@ type OrderFulfillmentGroup implements Node {
     "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
     offset: Int,
 
-    "Return results sorted in this order"
-    sortOrder: SortOrder = desc,
+    "Return results sorted in this quotation"
+    sortQuotation: SortQuotation = desc,
 
-    "By default, order items are sorted by when they were added to the order, newest first. Set this to sort by one of the other allowed fields"
-    sortBy: OrderFulfillmentGroupItemsSortByField = addedAt
-  ): OrderItemConnection
+    "By default, quotation items are sorted by when they were added to the quotation, newest first. Set this to sort by one of the other allowed fields"
+    sortBy: QuotationFulfillmentGroupItemsSortByField = addedAt
+  ): QuotationItemConnection
 
   "The fulfillment method that was selected, with its price quote"
   selectedFulfillmentOption: FulfillmentOption!
@@ -510,22 +510,22 @@ type OrderFulfillmentGroup implements Node {
   "The shipping label URL"
   shippingLabelUrl: String
 
-  "The shop responsible for fulfilling this order"
+  "The shop responsible for fulfilling this quotation"
   shop: Shop!
 
   "The machine-readable fulfillment group status."
   status: String!
 
   "A summary of the totals for this group"
-  summary: OrderSummary!
+  summary: QuotationSummary!
 
   "Total quantity of all items in the group"
   totalItemQuantity: Int!
 
-  "The order fulfillment group shipment tracking number"
+  "The quotation fulfillment group shipment tracking number"
   tracking: String
 
-  "The order fulfillment group shipment tracking URL"
+  "The quotation fulfillment group shipment tracking URL"
   trackingUrl: String
 
   """
@@ -534,25 +534,25 @@ type OrderFulfillmentGroup implements Node {
   type: FulfillmentType!
 }
 
-"An order"
-type Order implements Node {
-  "The Order ID"
+"An quotation"
+type Quotation implements Node {
+  "The Quotation ID"
   _id: ID!
 
-  "The account that placed the order. Some orders are created for anonymous users. Anonymous orders have a null account."
+  "The account that placed the quotation. Some quotations are created for anonymous users. Anonymous quotations have a null account."
   account: Account
 
-  "The ID of the cart that created this order. Carts are deleted after becoming orders, so this is just a reference."
+  "The ID of the cart that created this quotation. Carts are deleted after becoming quotations, so this is just a reference."
   cartId: ID
 
   "The date and time at which the cart was created, which is when the first item was added to it."
   createdAt: DateTime!
 
-  "The order status for display in UI"
+  "The quotation status for display in UI"
   displayStatus(
     """
     The language in which you want the status. If no translation is available for this language,
-    it will be in the default language of the shop that owns the order.
+    it will be in the default language of the shop that owns the quotation.
     """
     language: String!
   ): String!
@@ -560,45 +560,45 @@ type Order implements Node {
   "An email address that has been associated with the cart"
   email: String
 
-  "One or more fulfillment groups. Each of these are fulfilled and charged as separate orders."
-  fulfillmentGroups: [OrderFulfillmentGroup]!
+  "One or more fulfillment groups. Each of these are fulfilled and charged as separate quotations."
+  fulfillmentGroups: [QuotationFulfillmentGroup]!
 
-  "Notes about the order. This will always return an array but it may be empty"
-  notes: [OrderNote]!
+  "Notes about the quotation. This will always return an array but it may be empty"
+  notes: [QuotationNote]!
 
   """
-  Payments that collectively have paid or will pay for the total amount due for this order.
+  Payments that collectively have paid or will pay for the total amount due for this quotation.
   May be null if no payment is needed.
   """
   payments: [Payment]
 
   """
-  An ID by which the customer can reference this order when enquiring about it. A storefront user
+  An ID by which the customer can reference this quotation when enquiring about it. A storefront user
   interface may show this to customers. Do not display other IDs (`_id`) to customers.
   """
   referenceId: String!
 
-  "Refunds that have been applied to the payments on this order."
+  "Refunds that have been applied to the payments on this quotation."
   refunds: [Refund]
 
-  "The shop through which the order was placed"
+  "The shop through which the quotation was placed"
   shop: Shop!
 
-  "The machine-readable order status."
+  "The machine-readable quotation status."
   status: String!
 
-  "A summary of the totals for all fulfillment groups for this order"
-  summary: OrderSummary!
+  "A summary of the totals for all fulfillment groups for this quotation"
+  summary: QuotationSummary!
 
-  "Total quantity of all items in the order"
+  "Total quantity of all items in the quotation"
   totalItemQuantity: Int!
 
-  "The date and time at which this order was last updated"
+  "The date and time at which this quotation was last updated"
   updatedAt: DateTime!
 }
 
-"A note about an order"
-type OrderNote {
+"A note about an quotation"
+type QuotationNote {
   "The account who wrote this note"
   account: Account!
 
@@ -612,7 +612,7 @@ type OrderNote {
   updatedAt: DateTime!
 }
 
-"A refund of a payment on an order"
+"A refund of a payment on an quotation"
 type Refund implements Node {
   "The refund ID"
   _id: ID!
@@ -633,15 +633,15 @@ type Refund implements Node {
   reason: String
 }
 
-"Input for an `OrderFulfillmentGroupItem`"
-input OrderFulfillmentGroupItemInput {
+"Input for an `QuotationFulfillmentGroupItem`"
+input QuotationFulfillmentGroupItemInput {
   "The date and time at which this item was first added to the source cart, if this is something you want to track"
   addedAt: DateTime
 
   """
-  The price of the item, in the `order.currencyCode` currency. This value is not trusted; the actual price
-  is confirmed by the Order service. However, providing this value prevents an order being created for an
-  amount that does not match what was shown to the shopper in order preview.
+  The price of the item, in the `quotation.currencyCode` currency. This value is not trusted; the actual price
+  is confirmed by the Quotation service. However, providing this value prevents an quotation being created for an
+  amount that does not match what was shown to the shopper in quotation preview.
   """
   price: Float!
 
@@ -652,31 +652,31 @@ input OrderFulfillmentGroupItemInput {
   quantity: Int!
 }
 
-"Information needed by the selected fulfillment method to properly fulfill the order"
-input OrderFulfillmentGroupDataInput {
+"Information needed by the selected fulfillment method to properly fulfill the quotation"
+input QuotationFulfillmentGroupDataInput {
   "The mailing address to which this fulfillment group should be shipped"
   shippingAddress: AddressInput
 }
 
-"Input for an `OrderFulfillmentGroup`"
-input OrderFulfillmentGroupInput {
-  "Information needed by the selected fulfillment method to properly fulfill the order"
-  data: OrderFulfillmentGroupDataInput
+"Input for an `QuotationFulfillmentGroup`"
+input QuotationFulfillmentGroupInput {
+  "Information needed by the selected fulfillment method to properly fulfill the quotation"
+  data: QuotationFulfillmentGroupDataInput
 
-  "The list of items to be ordered"
-  items: [OrderFulfillmentGroupItemInput]!
+  "The list of items to be quotationed"
+  items: [QuotationFulfillmentGroupItemInput]!
 
-  "The ID of the fulfillment method to be used for this order group"
+  "The ID of the fulfillment method to be used for this quotation group"
   selectedFulfillmentMethodId: ID!
 
-  "The shop that owns these items and needs to fulfill this part of the order"
+  "The shop that owns these items and needs to fulfill this part of the quotation"
   shopId: ID!
 
   """
   The total price of the items, fulfillment, and taxes, for this group, less any discounts, in the
-  `order.currencyCode` currency. This value is not trusted; the actual total is calculated by the
-  Order service. However, providing this value prevents an order being created for an amount that
-  does not match what was shown to the shopper in order preview.
+  `quotation.currencyCode` currency. This value is not trusted; the actual total is calculated by the
+  Quotation service. However, providing this value prevents an quotation being created for an amount that
+  does not match what was shown to the shopper in quotation preview.
   """
   totalPrice: Float
 
@@ -686,25 +686,25 @@ input OrderFulfillmentGroupInput {
   type: FulfillmentType!
 }
 
-"Similar to `OrderFulfillmentGroupInput` but `items` can be omitted if moving existing items to the new group"
-input OrderFulfillmentGroupExistingOrderInput {
-  "Information needed by the selected fulfillment method to properly fulfill the order"
-  data: OrderFulfillmentGroupDataInput
+"Similar to `QuotationFulfillmentGroupInput` but `items` can be omitted if moving existing items to the new group"
+input QuotationFulfillmentGroupExistingQuotationInput {
+  "Information needed by the selected fulfillment method to properly fulfill the quotation"
+  data: QuotationFulfillmentGroupDataInput
 
-  "The list of items to be ordered"
-  items: [OrderFulfillmentGroupItemInput]
+  "The list of items to be quotationed"
+  items: [QuotationFulfillmentGroupItemInput]
 
-  "The ID of the fulfillment method to be used for this order group"
+  "The ID of the fulfillment method to be used for this quotation group"
   selectedFulfillmentMethodId: ID!
 
-  "The shop that owns these items and needs to fulfill this part of the order"
+  "The shop that owns these items and needs to fulfill this part of the quotation"
   shopId: ID!
 
   """
   The total price of the items, fulfillment, and taxes, for this group, less any discounts, in the
-  `order.currencyCode` currency. This value is not trusted; the actual total is calculated by the
-  Order service. However, providing this value prevents an order being created for an amount that
-  does not match what was shown to the shopper in order preview.
+  `quotation.currencyCode` currency. This value is not trusted; the actual total is calculated by the
+  Quotation service. However, providing this value prevents an quotation being created for an amount that
+  does not match what was shown to the shopper in quotation preview.
   """
   totalPrice: Float
 
@@ -714,12 +714,12 @@ input OrderFulfillmentGroupExistingOrderInput {
   type: FulfillmentType!
 }
 
-"Input for placing an order"
-input OrderInput {
+"Input for placing an quotation"
+input QuotationInput {
   """
-  The ID of the cart that is becoming an order. This is optional, and you can create an order without ever
+  The ID of the cart that is becoming an quotation. This is optional, and you can create an quotation without ever
   creating a cart. If you do have a cart, there are two good reasons to provide this. First, it serves as a
-  reference. Second, it allows the Cart service to automatically delete the related cart after the order is
+  reference. Second, it allows the Cart service to automatically delete the related cart after the quotation is
   created.
   """
   cartId: String
@@ -728,37 +728,37 @@ input OrderInput {
   currencyCode: String!
 
   """
-  An email address to use for order tracking and correspondence. If a logged in user is placing an order,
-  we recommend that you use their "orders" email address, if they have one, or their default email address.
+  An email address to use for quotation tracking and correspondence. If a logged in user is placing an quotation,
+  we recommend that you use their "quotations" email address, if they have one, or their default email address.
   Or you can ask them to provide any email address.
   """
   email: String!
 
   """
-  One or more fulfillment groups for the order. These are the actual orders that need to be fulfilled,
+  One or more fulfillment groups for the quotation. These are the actual quotations that need to be fulfilled,
   separate by shop, fulfillment type, and shipping origin or destination.
   """
-  fulfillmentGroups: [OrderFulfillmentGroupInput]!
+  fulfillmentGroups: [QuotationFulfillmentGroupInput]!
 
   """
-  The shop through which the order should be placed. Payment settings from this shop will be used. Note that
+  The shop through which the quotation should be placed. Payment settings from this shop will be used. Note that
   each fulfillment group also has a shop ID, which represents the shop that needs to fulfill that part of the
-  order, and those shop IDs may or may not match this one.
+  quotation, and those shop IDs may or may not match this one.
   """
   shopId: String!
 }
 
-"Input for adding order payments"
+"Input for adding quotation payments"
 input PaymentInput {
   """
-  Amount to charge, which must be less than or equal to the order total. This is assumed
-  to be in the same currency as the order. Set to `null` to charge the remaining amount
-  to this payment method, which might be the full order total if this is the only payment.
+  Amount to charge, which must be less than or equal to the quotation total. This is assumed
+  to be in the same currency as the quotation. Set to `null` to charge the remaining amount
+  to this payment method, which might be the full quotation total if this is the only payment.
   """
   amount: Float!
 
   """
-  The billing address entered by the shopper. If omitted, the billing address on the order input
+  The billing address entered by the shopper. If omitted, the billing address on the quotation input
   will be used. Some payment methods may not require a billing address but others will fail
   authorization without one, so be sure that client UI code is aware of which payment methods
   require collecting one.
@@ -772,49 +772,49 @@ input PaymentInput {
   method: PaymentMethodName!
 }
 
-"Input for the addOrderFulfillmentGroup mutation"
-input AddOrderFulfillmentGroupInput {
+"Input for the addQuotationFulfillmentGroup mutation"
+input AddQuotationFulfillmentGroupInput {
   "An optional string identifying the mutation call, which will be returned in the response payload"
   clientMutationId: String
 
-  "The order fulfillment group input, used to build the new group"
-  fulfillmentGroup: OrderFulfillmentGroupExistingOrderInput!
+  "The quotation fulfillment group input, used to build the new group"
+  fulfillmentGroup: QuotationFulfillmentGroupExistingQuotationInput!
 
-  "Optional list of order item IDs that should be moved from an existing group to the new group"
+  "Optional list of quotation item IDs that should be moved from an existing group to the new group"
   moveItemIds: [ID]
 
-  "ID of the order that has the item you want to add the group to"
-  orderId: ID!
+  "ID of the quotation that has the item you want to add the group to"
+  quotationId: ID!
 }
 
-"Input for the cancelOrderItem mutation"
-input CancelOrderItemInput {
+"Input for the cancelQuotationItem mutation"
+input CancelQuotationItemInput {
   "Quantity to cancel. Must be equal to or less than the item quantity."
   cancelQuantity: Int!
 
   "An optional string identifying the mutation call, which will be returned in the response payload"
   clientMutationId: String
 
-  "ID of the item order you want to cancel"
+  "ID of the item quotation you want to cancel"
   itemId: ID!
 
-  "ID of the order that has the item you want to cancel"
-  orderId: ID!
+  "ID of the quotation that has the item you want to cancel"
+  quotationId: ID!
 
   """
   An optional free text reason for cancellation, which may be shown to operators
-  or to the user who placed the order.
+  or to the user who placed the quotation.
   """
   reason: String
 }
 
-"Input for the cancelOrderItem mutation"
+"Input for the cancelQuotationItem mutation"
 input CreateRefundInput {
   "Amount to cancel. Must be equal to or less than the remaining non-refunded payment amount for this payment method."
   amount: Float!
 
-  "ID of the order that has the item you want to cancel"
-  orderId: ID!
+  "ID of the quotation that has the item you want to cancel"
+  quotationId: ID!
 
   "ID of the payment that you want to refund"
   paymentId: ID!
@@ -826,111 +826,111 @@ input CreateRefundInput {
   reason: String
 }
 
-"Input for the placeOrder mutation"
-input PlaceOrderInput {
+"Input for the placeQuotation mutation"
+input PlaceQuotationInput {
   "An optional string identifying the mutation call, which will be returned in the response payload"
   clientMutationId: String
 
-  "The order to be placed, if payment is accepted"
-  order: OrderInput!
+  "The quotation to be placed, if payment is accepted"
+  quotation: QuotationInput!
 
   """
   The information necessary to pay. Collect this information from the shopper during a checkout flow.
   You need not provide any payment input if the total is zero.
-  The total of all payment input `amount` fields must add up to the order total. The first payment
+  The total of all payment input `amount` fields must add up to the quotation total. The first payment
   method where the `amount` field is `null` will be charged the remainder due.
   """
   payments: [PaymentInput]
 }
 
-"Input for the moveOrderItems mutation"
-input MoveOrderItemsInput {
+"Input for the moveQuotationItems mutation"
+input MoveQuotationItemsInput {
   "An optional string identifying the mutation call, which will be returned in the response payload"
   clientMutationId: String
 
-  "The ID of the order fulfillment group from which all the items are to be moved."
+  "The ID of the quotation fulfillment group from which all the items are to be moved."
   fromFulfillmentGroupId: ID!
 
   "The list of item IDs to move. The full quantity must be moved."
   itemIds: [ID]!
 
-  "ID of the order that has the items you want to move"
-  orderId: ID!
+  "ID of the quotation that has the items you want to move"
+  quotationId: ID!
 
-  "The ID of the order fulfillment group to which all the items are to be moved."
+  "The ID of the quotation fulfillment group to which all the items are to be moved."
   toFulfillmentGroupId: ID!
 }
 
-"Input for the splitOrderItem mutation"
-input SplitOrderItemInput {
+"Input for the splitQuotationItem mutation"
+input SplitQuotationItemInput {
   "An optional string identifying the mutation call, which will be returned in the response payload"
   clientMutationId: String
 
-  "ID of the item order you want to split"
+  "ID of the item quotation you want to split"
   itemId: ID!
 
-  "The quantity that will be transferred to a new order item on the same fulfillment group."
+  "The quantity that will be transferred to a new quotation item on the same fulfillment group."
   newItemQuantity: Int!
 
-  "ID of the order that has the item you want to split"
-  orderId: ID!
+  "ID of the quotation that has the item you want to split"
+  quotationId: ID!
 }
 
-"Input for the updateOrder mutation"
-input UpdateOrderInput {
+"Input for the updateQuotation mutation"
+input UpdateQuotationInput {
   "An optional string identifying the mutation call, which will be returned in the response payload"
   clientMutationId: String
 
-  "Set the order email to this"
+  "Set the quotation email to this"
   email: String
 
-  "ID of the order to update"
-  orderId: ID!
+  "ID of the quotation to update"
+  quotationId: ID!
 
-  "Set the current order status to this"
+  "Set the current quotation status to this"
   status: String
 }
 
-"Input for the updateOrderFulfillmentGroup mutation"
-input UpdateOrderFulfillmentGroupInput {
+"Input for the updateQuotationFulfillmentGroup mutation"
+input UpdateQuotationFulfillmentGroupInput {
   "An optional string identifying the mutation call, which will be returned in the response payload"
   clientMutationId: String
 
-  "ID of the order fulfillment group to update"
-  orderFulfillmentGroupId: ID!
+  "ID of the quotation fulfillment group to update"
+  quotationFulfillmentGroupId: ID!
 
-  "ID of the order to update"
-  orderId: ID!
+  "ID of the quotation to update"
+  quotationId: ID!
 
-  "Set the current order fulfillment group status to this"
+  "Set the current quotation fulfillment group status to this"
   status: String
 
-  "Set this as the current order fulfillment group shipment tracking reference"
+  "Set this as the current quotation fulfillment group shipment tracking reference"
   tracking: String
 
-  "Set this as the current order fulfillment group shipment tracking URL"
+  "Set this as the current quotation fulfillment group shipment tracking URL"
   trackingUrl: String
 }
 
-"Response payload for the addOrderFulfillmentGroup mutation"
-type AddOrderFulfillmentGroupPayload {
+"Response payload for the addQuotationFulfillmentGroup mutation"
+type AddQuotationFulfillmentGroupPayload {
   "The same string you sent with the mutation params, for matching mutation calls with their responses"
   clientMutationId: String
 
   "ID of the added fulfillment group"
   newFulfillmentGroupId: ID!
 
-  "The updated order"
-  order: Order!
+  "The updated quotation"
+  quotation: Quotation!
 }
 
-"Response payload for the cancelOrderItem mutation"
-type CancelOrderItemPayload {
+"Response payload for the cancelQuotationItem mutation"
+type CancelQuotationItemPayload {
   "The same string you sent with the mutation params, for matching mutation calls with their responses"
   clientMutationId: String
 
-  "The updated order"
-  order: Order!
+  "The updated quotation"
+  quotation: Quotation!
 }
 
 "Response payload for the createRefund mutation"
@@ -938,75 +938,75 @@ type CreateRefundPayload {
   "The same string you sent with the mutation params, for matching mutation calls with their responses"
   clientMutationId: String
 
-  "The updated order"
-  order: Order!
+  "The updated quotation"
+  quotation: Quotation!
 }
 
-"Response payload for the moveOrderItems mutation"
-type MoveOrderItemsPayload {
+"Response payload for the moveQuotationItems mutation"
+type MoveQuotationItemsPayload {
   "The same string you sent with the mutation params, for matching mutation calls with their responses"
   clientMutationId: String
 
-  "The updated order"
-  order: Order!
+  "The updated quotation"
+  quotation: Quotation!
 }
 
-"Response payload for the placeOrder mutation"
-type PlaceOrderPayload {
+"Response payload for the placeQuotation mutation"
+type PlaceQuotationPayload {
   "The same string you sent with the mutation params, for matching mutation calls with their responses"
   clientMutationId: String
 
-  "Orders that were created"
-  orders: [Order]!
+  "Quotations that were created"
+  quotations: [Quotation]!
 
   "If you are not logged in, this will be a token that can be used for future requests"
   token: String
 }
 
-"Response payload for the splitOrderItem mutation"
-type SplitOrderItemPayload {
+"Response payload for the splitQuotationItem mutation"
+type SplitQuotationItemPayload {
   "The same string you sent with the mutation params, for matching mutation calls with their responses"
   clientMutationId: String
 
-  "The ID of the new order item that was created"
+  "The ID of the new quotation item that was created"
   newItemId: ID!
 
-  "The updated order"
-  order: Order!
+  "The updated quotation"
+  quotation: Quotation!
 }
 
-"Response payload for the updateOrder mutation"
-type UpdateOrderPayload {
+"Response payload for the updateQuotation mutation"
+type UpdateQuotationPayload {
   "The same string you sent with the mutation params, for matching mutation calls with their responses"
   clientMutationId: String
 
-  "The updated order"
-  order: Order!
+  "The updated quotation"
+  quotation: Quotation!
 }
 
-"Response payload for the updateOrderFulfillmentGroup mutation"
-type UpdateOrderFulfillmentGroupPayload {
+"Response payload for the updateQuotationFulfillmentGroup mutation"
+type UpdateQuotationFulfillmentGroupPayload {
   "The same string you sent with the mutation params, for matching mutation calls with their responses"
   clientMutationId: String
 
-  "The updated order"
-  order: Order!
+  "The updated quotation"
+  quotation: Quotation!
 }
 
-"Available order fulfillment statuses"
-enum OrderFulfillmentStatus {
-  "An order that has been completed"
+"Available quotation fulfillment statuses"
+enum QuotationFulfillmentStatus {
+  "An quotation that has been completed"
   completed
 
-  "Newly created order that needs processing"
+  "Newly created quotation that needs processing"
   new
 
-  "An order that is currently being processed"
+  "An quotation that is currently being processed"
   processing
 }
 
-"Order payment status"
-enum OrderPaymentStatus {
+"Quotation payment status"
+enum QuotationPaymentStatus {
   "Payments that have been successfully processed"
   completed
 
@@ -1014,18 +1014,18 @@ enum OrderPaymentStatus {
   created
 }
 
-"Order status"
-enum OrderStatus {
-  "Canceled order"
+"Quotation status"
+enum QuotationStatus {
+  "Canceled quotation"
   canceled
 
-  "A completed order"
+  "A completed quotation"
   completed
 
-  "A new order that needs processing"
+  "A new quotation that needs processing"
   new
 
-  "An order that is being processed"
+  "An quotation that is being processed"
   processing
 }
 
@@ -1038,20 +1038,20 @@ input CreatedAtInput {
   lte: DateTime
 }
 
-"Input type for filters to by applied to an Orders list"
-input OrderFilterInput {
+"Input type for filters to by applied to an Quotations list"
+input QuotationFilterInput {
   "A createdAt date range to filter by"
   createdAt: CreatedAtInput
 
-  "An order's fulfillment status"
-  fulfillmentStatus: [OrderFulfillmentStatus]
+  "An quotation's fulfillment status"
+  fulfillmentStatus: [QuotationFulfillmentStatus]
 
-  "An order's payment status"
-  paymentStatus: [OrderPaymentStatus]
+  "An quotation's payment status"
+  paymentStatus: [QuotationPaymentStatus]
 
   "Keywords typed by the user in the search input field"
   searchField: String
 
-  "The order's status to filter by"
-  status: OrderStatus
+  "The quotation's status to filter by"
+  status: QuotationStatus
 }

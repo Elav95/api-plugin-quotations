@@ -1,4 +1,4 @@
-import sendOrderEmail from "./util/sendOrderEmail.js";
+import sendQuotationEmail from "./util/sendQuotationEmail.js";
 
 /**
  * @summary Called on startup
@@ -6,8 +6,8 @@ import sendOrderEmail from "./util/sendOrderEmail.js";
  * @param {Object} context.collections Map of MongoDB collections
  * @returns {undefined}
  */
-export default function ordersStartup(context) {
+export default function quotationsStartup(context) {
   const { appEvents } = context;
 
-  appEvents.on("afterOrderCreate", ({ order }) => sendOrderEmail(context, order));
+  appEvents.on("afterQuotationCreate", ({ quotation }) => sendQuotationEmail(context, quotation));
 }

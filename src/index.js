@@ -6,9 +6,9 @@ import preStartup from "./preStartup.js";
 import queries from "./queries/index.js";
 import resolvers from "./resolvers/index.js";
 import schemas from "./schemas/index.js";
-import { Order, OrderFulfillmentGroup, OrderItem } from "./simpleSchemas.js";
+import { Quotation, QuotationFulfillmentGroup, QuotationItem } from "./simpleSchemas.js";
 import startup from "./startup.js";
-import getDataForOrderEmail from "./util/getDataForOrderEmail.js";
+import getDataForQuotationEmail from "./util/getDataForQuotationEmail.js";
 
 /**
  * @summary Import and call this function to add this plugin to your API.
@@ -17,13 +17,13 @@ import getDataForOrderEmail from "./util/getDataForOrderEmail.js";
  */
 export default async function register(app) {
   await app.registerPlugin({
-    label: "Orders",
-    name: "orders",
+    label: "Quotations",
+    name: "quotations",
     version: pkg.version,
     i18n,
     collections: {
-      Orders: {
-        name: "Orders",
+      Quotations: {
+        name: "Quotations",
         indexes: [
           // Create indexes. We set specific names for backwards compatibility
           // with indexes created by the aldeed:schema-index Meteor package.
@@ -42,7 +42,7 @@ export default async function register(app) {
       }
     },
     functionsByType: {
-      getDataForOrderEmail: [getDataForOrderEmail],
+      getDataForQuotationEmail: [getDataForQuotationEmail],
       preStartup: [preStartup],
       startup: [startup]
     },
@@ -54,9 +54,9 @@ export default async function register(app) {
     queries,
     policies,
     simpleSchemas: {
-      Order,
-      OrderFulfillmentGroup,
-      OrderItem
+      Quotation,
+      QuotationFulfillmentGroup,
+      QuotationItem
     }
   });
 }

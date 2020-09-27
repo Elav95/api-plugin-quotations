@@ -10,16 +10,16 @@ import {
 } from "@reactioncommerce/api-plugin-shops/src/simpleSchemas.js";
 
 import {
-  CommonOrder,
-  CommonOrderItem,
-  Order,
-  OrderAddress,
-  OrderFulfillmentGroup,
-  orderFulfillmentGroupInputSchema,
-  orderInputSchema,
-  OrderInvoice,
-  OrderItem,
-  orderItemInputSchema,
+  CommonQuotation,
+  CommonQuotationItem,
+  Quotation,
+  QuotationAddress,
+  QuotationFulfillmentGroup,
+  quotationFulfillmentGroupInputSchema,
+  quotationInputSchema,
+  QuotationInvoice,
+  QuotationItem,
+  quotationItemInputSchema,
   Payment
 } from "../simpleSchemas.js";
 
@@ -27,16 +27,16 @@ const schemasToAddToFactory = {
   Catalog,
   CatalogProduct,
   CatalogProductVariant,
-  CommonOrder,
-  CommonOrderItem,
-  Order,
-  OrderAddress,
-  OrderFulfillmentGroup,
-  orderFulfillmentGroupInputSchema,
-  orderInputSchema,
-  OrderInvoice,
-  OrderItem,
-  orderItemInputSchema,
+  CommonQuotation,
+  CommonQuotationItem,
+  Quotation,
+  QuotationAddress,
+  QuotationFulfillmentGroup,
+  quotationFulfillmentGroupInputSchema,
+  quotationInputSchema,
+  QuotationInvoice,
+  QuotationItem,
+  quotationItemInputSchema,
   Payment,
   Shop
 };

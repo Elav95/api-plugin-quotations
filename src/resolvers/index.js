@@ -1,30 +1,28 @@
 import getConnectionTypeResolvers from "@reactioncommerce/api-utils/graphql/getConnectionTypeResolvers.js";
-import { encodeOrderFulfillmentGroupOpaqueId, encodeOrderItemOpaqueId } from "../xforms/id.js";
+import { encodeQuotationFulfillmentGroupOpaqueId, encodeQuotationItemOpaqueId } from "../xforms/id.js";
 import Mutation from "./Mutation/index.js";
-import Order from "./Order/index.js";
-import OrderFulfillmentGroup from "./OrderFulfillmentGroup/index.js";
-import OrderItem from "./OrderItem/index.js";
+import Quotation from "./Quotation/index.js";
+import QuotationFulfillmentGroup from "./QuotationFulfillmentGroup/index.js";
+import QuotationItem from "./QuotationItem/index.js";
 import Query from "./Query/index.js";
-import Refund from "./Refund/index.js";
 
 export default {
-  AddOrderFulfillmentGroupPayload: {
-    newFulfillmentGroupId: (node) => encodeOrderFulfillmentGroupOpaqueId(node.newFulfillmentGroupId)
+  AddQuotationFulfillmentGroupPayload: {
+    newFulfillmentGroupId: (node) => encodeQuotationFulfillmentGroupOpaqueId(node.newFulfillmentGroupId)
   },
   Mutation,
-  Order,
-  OrderFulfillmentGroup,
-  OrderFulfillmentGroupData: {
+  Quotation,
+  QuotationFulfillmentGroup,
+  QuotationFulfillmentGroupData: {
     __resolveType(obj) {
       return obj.gqlType;
     }
   },
-  OrderItem,
+  QuotationItem,
   Query,
-  Refund,
-  SplitOrderItemPayload: {
-    newItemId: (node) => encodeOrderItemOpaqueId(node.newItemId)
+  SplitQuotationItemPayload: {
+    newItemId: (node) => encodeQuotationItemOpaqueId(node.newItemId)
   },
-  ...getConnectionTypeResolvers("Order"),
-  ...getConnectionTypeResolvers("OrdersByAccountId")
+  ...Quotation("getConnectionTypeResolvers"),
+  ...getConnectionTypeResolvers("QuotationsByAccountId")
 };

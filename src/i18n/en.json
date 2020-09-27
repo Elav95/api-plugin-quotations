@@ -1,40 +1,40 @@
 [
   {
     "i18n": "en",
-    "ns": "reaction-orders",
+    "ns": "reaction-quotations",
     "translation": {
-      "reaction-orders": {
+      "reaction-quotations": {
         "calculateRefundByItem": "Calculate refund by item",
         "fulfillment": "Fulfillment",
         "fulfillmentGroupHeader": "Fulfillment group {{currentGroupCount}} of {{totalGroupsCount}}",
         "items": "Items",
         "newStatus": "New status",
-        "notFound": "Order Not Found",
+        "notFound": "Quotation Not Found",
         "refunds": "Refunds",
-        "orderActions": {
+        "quotationActions": {
           "markAsPackedDescription": "Mark all items in this fulfillment group as \"Packed\"",
           "markAsPackedLabel": "Mark as packed",
           "markAsShippedDescription": "Mark all items in this fulfillment group as \"Shipped\"",
           "markAsShippedLabel": "Mark as shipped",
           "updateGroupStatus": "Update group status"
         },
-        "orderDetails": "Order Details",
-        "order": {
+        "quotationDetails": "Quotation Details",
+        "quotation": {
           "allowShippingRefund": "Allow shipping to be refunded",
           "allPaymentsRefunded": "All payments have been fully refunded",
           "amountToRefund": "Amount to refund",
           "applyRefund": "Apply refund",
-          "applyRefundDuringCancelOrder": "This will refund the order total of {{currencySymbol}}{{invoiceTotal}}",
-          "applyRefundToThisOrder": "Apply refund of {{refund}} to this order?",
+          "applyRefundDuringCancelQuotation": "This will refund the quotation total of {{currencySymbol}}{{invoiceTotal}}",
+          "applyRefundToThisQuotation": "Apply refund of {{refund}} to this quotation?",
           "availableToRefund": "Available to refund",
           "cancelGroup": "Do you want to cancel this group?",
           "cancelGroupLabel": "Cancel group",
-          "cancelOrder": "Do you want to cancel this entire order?",
-          "cancelOrderLabel": "Cancel order",
-          "cancelOrderNoRestock": "Do not restock",
-          "cancelOrderThenRestock": "Restock",
+          "cancelQuotation": "Do you want to cancel this entire quotation?",
+          "cancelQuotationLabel": "Cancel quotation",
+          "cancelQuotationNoRestock": "Do not restock",
+          "cancelQuotationThenRestock": "Restock",
           "noRefundReason": "No reason provided",
-          "order": "Order",
+          "quotation": "Quotation",
           "paymentRefunded": "Payment is fully refunded",
           "placed": "Placed",
           "previousRefunds": "Previous refunds",
@@ -53,7 +53,7 @@
           "refundItemsTitle": "Refund Items",
           "refundItemsWait": "Payment is not yet captured",
           "refundNotSupported": "Payment method does not support refunds",
-          "refundsNotSupported": "Refunds are not supported with the payment method(s) used for this order",
+          "refundsNotSupported": "Refunds are not supported with the payment method(s) used for this quotation",
           "refundReason": {
             "customerRequest": "Customer request",
             "duplicatePayment": "Duplicate payment",
@@ -66,20 +66,20 @@
         },
         "status": {
           "new": "New ",
-          "coreOrderWorkflow/created": "Created ",
-          "coreOrderWorkflow/processing": "Processing ",
-          "coreOrderWorkflow/completed": "Completed ",
-          "coreOrderWorkflow/canceled": "Canceled ",
-          "coreOrderWorkflow/picked": "Picked ",
-          "coreOrderWorkflow/packed": "Packed ",
-          "coreOrderWorkflow/labeled": "Labeled ",
-          "coreOrderWorkflow/shipped": "Shipped ",
+          "coreQuotationWorkflow/created": "Created ",
+          "coreQuotationWorkflow/processing": "Processing ",
+          "coreQuotationWorkflow/completed": "Completed ",
+          "coreQuotationWorkflow/canceled": "Canceled ",
+          "coreQuotationWorkflow/picked": "Picked ",
+          "coreQuotationWorkflow/packed": "Packed ",
+          "coreQuotationWorkflow/labeled": "Labeled ",
+          "coreQuotationWorkflow/shipped": "Shipped ",
           "multipleStatuses": "Multiple statuses"
         },
-        "orderCard": {
-          "orderSummary": {
-            "showOrderSummary": "Show order summary",
-            "title": "Order summary"
+        "quotationCard": {
+          "quotationSummary": {
+            "showQuotationSummary": "Show quotation summary",
+            "title": "Quotation summary"
           }
         },
         "shippingAddress": "Shipping address",
@@ -87,29 +87,29 @@
         "trackingNumber": "Tracking number",
         "admin": {
           "shortcut": {
-            "ordersLabel": "Orders"
+            "quotationsLabel": "Quotations"
           },
-          "orderRisk": {
+          "quotationRisk": {
             "high": "High Risk",
-            "riskCapture": "Capture Order with Risk Charge?",
-            "riskCaptureWarn": "You are about to capture order with a charge risk. Confirm before proceeding."
+            "riskCapture": "Capture Quotation with Risk Charge?",
+            "riskCaptureWarn": "You are about to capture quotation with a charge risk. Confirm before proceeding."
           },
           "dashboard": {
-            "ordersLabel": "Orders",
-            "ordersTitle": "Orders",
-            "ordersDescription": "Fulfill your orders",
+            "quotationsLabel": "Quotations",
+            "quotationsTitle": "Quotations",
+            "quotationsDescription": "Fulfill your quotations",
             "clearSearch": "Clear"
           },
-          "orderWorkflow": {
-            "ordersList": {
+          "quotationWorkflow": {
+            "quotationsList": {
               "date": "Date",
-              "orderId": "Order ID",
+              "quotationId": "Quotation ID",
               "total": "Total",
               "emailNotFound": "Email not available"
             },
             "summary": {
               "cardTitle": "Summary",
-              "copyOrderLink": "Copy Order Link"
+              "copyQuotationLink": "Copy Quotation Link"
             },
             "invoice": {
               "cardTitle": "Invoice",
@@ -123,7 +123,7 @@
               "refundTotal": "Refund Total"
             },
             "fulfillment": "Fulfillment",
-            "orderDetails": "Order details",
+            "quotationDetails": "Quotation details",
             "shipmentTracking": "Shipment",
             "fulfillmentGroups": {
               "cancelFulfillmentGroup": "Cancel group",
@@ -139,7 +139,7 @@
               "fulfillment": "Fulfillment",
               "email": "Email",
               "date": "Date",
-              "id": "Order ID",
+              "id": "Quotation ID",
               "total": "Total",
               "shipping": "Shipping",
               "status": "Status"
@@ -150,7 +150,7 @@
               "captured": "Captured",
               "completed": "Completed",
               "dateRange": "Date range",
-              "globalFilter": "Filter orders",
+              "globalFilter": "Filter quotations",
               "last30": "Last 30 days",
               "last7": "Last 7 days",
               "new": "New",
@@ -162,36 +162,36 @@
             },
             "search": {
               "clearSearch": "Clear",
-              "placeholder": "Search orders"
+              "placeholder": "Search quotations"
             },
-            "orderStatus": {
-              "coreOrderWorkflow/canceled": "Canceled",
-              "coreOrderWorkflow/completed": "Completed",
+            "quotationStatus": {
+              "coreQuotationWorkflow/canceled": "Canceled",
+              "coreQuotationWorkflow/completed": "Completed",
               "new": "New",
-              "coreOrderWorkflow/processing": "Processing"
+              "coreQuotationWorkflow/processing": "Processing"
             },
             "paymentStatus": {
               "completed": "Completed",
               "created": "Created"
             },
             "fulfillmentStatus": {
-              "coreOrderWorkflow/completed": "Completed",
-              "coreOrderWorkflow/created": "Created",
-              "coreOrderWorkflow/canceled": "Canceled",
+              "coreQuotationWorkflow/completed": "Completed",
+              "coreQuotationWorkflow/created": "Created",
+              "coreQuotationWorkflow/canceled": "Canceled",
               "new": "New",
-              "coreOrderWorkflow/processing": "Processing"
+              "coreQuotationWorkflow/processing": "Processing"
             },
             "data": {
               "status": {
                 "new": "New ",
-                "coreOrderWorkflow/created": "Created ",
-                "coreOrderWorkflow/processing": "Processing ",
-                "coreOrderWorkflow/completed": "Completed ",
-                "coreOrderWorkflow/canceled": "Canceled ",
-                "coreOrderWorkflow/picked": "Picked ",
-                "coreOrderWorkflow/packed": "Packed ",
-                "coreOrderWorkflow/labeled": "Labeled ",
-                "coreOrderWorkflow/shipped": "Shipped ",
+                "coreQuotationWorkflow/created": "Created ",
+                "coreQuotationWorkflow/processing": "Processing ",
+                "coreQuotationWorkflow/completed": "Completed ",
+                "coreQuotationWorkflow/canceled": "Canceled ",
+                "coreQuotationWorkflow/picked": "Picked ",
+                "coreQuotationWorkflow/packed": "Packed ",
+                "coreQuotationWorkflow/labeled": "Labeled ",
+                "coreQuotationWorkflow/shipped": "Shipped ",
                 "multipleStatuses": "Multiple statuses"
               }
             }

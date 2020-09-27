@@ -1,11 +1,11 @@
-const canceledStatus = "coreOrderWorkflow/canceled";
-const itemCanceledStatus = "coreOrderItemWorkflow/canceled";
+const canceledStatus = "coreQuotationWorkflow/canceled";
+const itemCanceledStatus = "coreQuotationItemWorkflow/canceled";
 
 /**
  * @summary Given a fulfillment group, determines and set the correct
  *   current status on it based on the status of all the items in the
  *   group. Mutates the group object if necessary
- * @param {Object} group An order fulfillment group
+ * @param {Object} group An quotation fulfillment group
  * @returns {undefined}
  */
 export default function updateGroupStatusFromItemStatus(group) {

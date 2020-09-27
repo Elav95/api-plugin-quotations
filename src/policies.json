@@ -1,15 +1,15 @@
 [
   {
-    "description": "Order managers acting on all entities.",
-    "subjects": [ "reaction:groups:order-managers" ],
-    "resources": [ "reaction:legacy:orders" ],
+    "description": "Quotation managers acting on all entities.",
+    "subjects": [ "reaction:groups:quotation-managers" ],
+    "resources": [ "reaction:legacy:quotations" ],
     "actions": [ "read" ],
     "effect": "allow"
   },
   {
-    "description": "Order managers acting on specific entities.",
-    "subjects": [ "reaction:groups:order-managers" ],
-    "resources": [ "reaction:legacy:orders:*" ],
+    "description": "Quotation managers acting on specific entities.",
+    "subjects": [ "reaction:groups:quotation-managers" ],
+    "resources": [ "reaction:legacy:quotations:*" ],
     "actions": [
       "approve:payment",
       "cancel:item",
@@ -21,12 +21,12 @@
     "effect": "allow"
   },
   {
-    "description": "Order owner acting on their order.",
+    "description": "Quotation owner acting on their quotation.",
     "subjects": [ "reaction:users:*" ],
-    "resources": [ "reaction:legacy:orders:*" ],
+    "resources": [ "reaction:legacy:quotations:*" ],
     "actions": [
       "cancel:item",
-      "cancel:order",
+      "cancel:quotation",
       "read",
       "update"
     ],
