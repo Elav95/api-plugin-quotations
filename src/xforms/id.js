@@ -10,7 +10,6 @@ const namespaces = {
   QuotationItem: "reaction/quotationItem",
   Payment: "reaction/payment",
   Product: "reaction/product",
-  Refund: "reaction/refund",
   Shop: "reaction/shop"
 };
 
@@ -21,7 +20,6 @@ export const encodeQuotationItemOpaqueId = encodeOpaqueId(namespaces.QuotationIt
 export const encodeQuotationOpaqueId = encodeOpaqueId(namespaces.Quotation);
 export const encodePaymentOpaqueId = encodeOpaqueId(namespaces.Payment);
 export const encodeProductOpaqueId = encodeOpaqueId(namespaces.Product);
-export const encodeRefundOpaqueId = encodeOpaqueId(namespaces.Refund);
 export const encodeShopOpaqueId = encodeOpaqueId(namespaces.Shop);
 
 export const decodeAccountOpaqueId = decodeOpaqueIdForNamespace(namespaces.Account);
@@ -32,7 +30,6 @@ export const decodeQuotationItemOpaqueId = decodeOpaqueIdForNamespace(namespaces
 export const decodeQuotationOpaqueId = decodeOpaqueIdForNamespace(namespaces.Quotation);
 export const decodePaymentOpaqueId = decodeOpaqueIdForNamespace(namespaces.Payment);
 export const decodeProductOpaqueId = decodeOpaqueIdForNamespace(namespaces.Product);
-export const decodeRefundOpaqueId = decodeOpaqueIdForNamespace(namespaces.Refund);
 export const decodeShopOpaqueId = decodeOpaqueIdForNamespace(namespaces.Shop);
 
 /**

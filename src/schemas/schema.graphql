@@ -85,33 +85,6 @@ extend type Query {
     "A valid anonymous access token for this quotation. Required if the quotation is not linked with an account."
     token: String
   ): Quotation
-
-  "Get refunds applied to an quotation by quotation ID"
-  refunds(
-    "The quotation ID"
-    quotationId: ID!,
-
-    "The shop that owns the quotation"
-    shopId: ID!,
-
-    "A valid anonymous access token for this quotation. Required if the quotation is not linked with an account."
-    token: String
-  ): [Refund]
-
-  "Get refunds applied to a specific payment by payment ID"
-  refundsByPaymentId(
-    "The quotation ID"
-    quotationId: ID!,
-
-    "The ID of one of the payments made for this quotation"
-    paymentId: ID!,
-
-    "The shop that owns the quotation"
-    shopId: ID!,
-
-    "A valid anonymous access token for this quotation. Required if the quotation is not linked with an account."
-    token: String
-  ): [Refund]
 }
 
 extend type Mutation {
@@ -137,12 +110,6 @@ extend type Mutation {
     "Mutation input"
     input: CancelQuotationItemInput!
   ): CancelQuotationItemPayload!
-
-  "Use this mutation to create a refund on a payment method used to make the quotation"
-  createRefund(
-    "Mutation input"
-    input: CreateRefundInput!
-  ): CreateRefundPayload!
 
   """
   Use this mutation to move one or more items between existing quotation fulfillment groups.
@@ -578,9 +545,6 @@ type Quotation implements Node {
   """
   referenceId: String!
 
-  "Refunds that have been applied to the payments on this quotation."
-  refunds: [Refund]
-
   "The shop through which the quotation was placed"
   shop: Shop!
 
@@ -610,27 +574,6 @@ type QuotationNote {
 
   "The date and time at which this note was last updated"
   updatedAt: DateTime!
-}
-
-"A refund of a payment on an quotation"
-type Refund implements Node {
-  "The refund ID"
-  _id: ID!
-
-  "The amount of the refund"
-  amount: Money!
-
-  "The date and time at which the refund was created"
-  createdAt: DateTime!
-
-  "The display name of the payment refunded to"
-  paymentDisplayName: String!
-
-  "The ID of the payment this refund is applied to"
-  paymentId: ID!
-
-  "The reason for the refund"
-  reason: String
 }
 
 "Input for an `QuotationFulfillmentGroupItem`"
@@ -808,24 +751,6 @@ input CancelQuotationItemInput {
   reason: String
 }
 
-"Input for the cancelQuotationItem mutation"
-input CreateRefundInput {
-  "Amount to cancel. Must be equal to or less than the remaining non-refunded payment amount for this payment method."
-  amount: Float!
-
-  "ID of the quotation that has the item you want to cancel"
-  quotationId: ID!
-
-  "ID of the payment that you want to refund"
-  paymentId: ID!
-
-  """
-  An optional free text reason for refund, which may be shown to operators
-  or to the user who requested the refund.
-  """
-  reason: String
-}
-
 "Input for the placeQuotation mutation"
 input PlaceQuotationInput {
   "An optional string identifying the mutation call, which will be returned in the response payload"
@@ -926,15 +851,6 @@ type AddQuotationFulfillmentGroupPayload {
 
 "Response payload for the cancelQuotationItem mutation"
 type CancelQuotationItemPayload {
-  "The same string you sent with the mutation params, for matching mutation calls with their responses"
-  clientMutationId: String
-
-  "The updated quotation"
-  quotation: Quotation!
-}
-
-"Response payload for the createRefund mutation"
-type CreateRefundPayload {
   "The same string you sent with the mutation params, for matching mutation calls with their responses"
   clientMutationId: String
 
@@ -1055,3 +971,25 @@ input QuotationFilterInput {
   "The quotation's status to filter by"
   status: QuotationStatus
 }
+
+
+
+"""
+Use this mutation to confirm quotations.
+"""
+input confirmQuotation(
+  "Mutation input"
+  "ID of the quotation that want to confirm"
+  quotationId: ID!,
+
+  "The shop that owns the quotation"
+  shopId: ID!,
+
+  "The (estimated) shipping price"
+  price: Money!
+
+  "The comment added by the seller"
+  comment: String
+)
+
+"""
